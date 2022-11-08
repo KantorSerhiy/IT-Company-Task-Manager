@@ -18,7 +18,7 @@ class Position(models.Model):
 
 
 class Worker(AbstractUser):
-    position = models.ForeignKey(to=Position, on_delete=models.CASCADE)
+    position = models.ForeignKey(to=Position, on_delete=models.CASCADE, null=True)
     slug = models.SlugField(max_length=63, unique=True)
 
     def save(self, *args, **kwargs):
@@ -36,7 +36,7 @@ class Worker(AbstractUser):
 
 
 class Task(models.Model):
-    PRIORITY_CHOISES = [
+    PRIORITY_CHOICES = [
         ("U", "Urgent"),
         ("H", "High"),
         ("M", "Medium"),
@@ -47,7 +47,7 @@ class Task(models.Model):
     description = models.TextField(max_length=255)
     deadline = models.DateTimeField()
     is_completed = models.BooleanField()
-    priority = models.CharField(max_length=1, choices=PRIORITY_CHOISES)
+    priority = models.CharField(max_length=1, choices=PRIORITY_CHOICES)
     task_type = models.ForeignKey(to=TaskType, on_delete=models.CASCADE)
     assignees = models.ManyToManyField(to=Worker, related_name="tasks")
     created_ad = models.DateTimeField(auto_now_add=True)
