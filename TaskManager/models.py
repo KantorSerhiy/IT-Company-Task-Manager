@@ -7,14 +7,14 @@ class TaskType(models.Model):
     name = models.CharField(max_length=63)
 
     def __str__(self):
-        return {self.name}
+        return f"{self.name}"
 
 
 class Position(models.Model):
     name = models.CharField(max_length=63)
 
     def __str__(self):
-        return {self.name}
+        return f"{self.name}"
 
 
 class Worker(AbstractUser):
@@ -53,4 +53,4 @@ class Task(models.Model):
     created_ad = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.name}( type:{self.task_type},deadline{self.deadline}, priority{self.priority})"
+        return f"{self.name}( type:{self.task_type},priority {self.priority})"
