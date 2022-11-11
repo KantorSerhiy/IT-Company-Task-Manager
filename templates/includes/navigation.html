@@ -25,8 +25,18 @@
             <li><a class="dropdown-item" href="#">Another action</a></li>
             <li><a class="dropdown-item" href="#">Something else here</a></li>
           </ul>
+          <li class="nav-item last-related">
+            {% if user.is_authenticated %}
+              <li class="nav-item"><a class="nav-link"  href="{{ user.get_absolute_url }}">{{ user.get_username }}</a></li>
+              <li class="nav-item"><a class="nav-link"  href="{% url 'TaskManager:logout' %}">  Logout</a></li>
+            {% else %}
+              <li class="nav-item"><a class="nav-link" href="{% url 'TaskManager:login' %}">Login</a></li>
+              <li class="nav-item"><a class="nav-link" href="{% url 'TaskManager:register' %}">Registration</a></li>
+            {% endif %}
+          </li>
         </li>
       </ul>
     </div>
   </div>
+
 </nav>

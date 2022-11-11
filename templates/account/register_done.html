@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Welcome to Task Manager, {{ username }}</h1>
+    <p>Your account has been successfully created. Now you can <a href="{% url "TaskManager:login" %}">log in</a>.</p>
+{% endblock %}
