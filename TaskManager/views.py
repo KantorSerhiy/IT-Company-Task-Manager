@@ -3,7 +3,7 @@ from django.contrib.auth.views import LoginView, LogoutView
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic
-
+from django.views.generic import DetailView
 
 from TaskManager.forms import UsersCreationForm
 
@@ -30,6 +30,12 @@ class RegisterUser(generic.CreateView):
 
     def get_success_url(self):
         return reverse_lazy("TaskManager:done", kwargs={"name": self.object.username})
+
+
+class UserDetailView(generic.DetailView):
+    model = Worker
+    queryset = Worker.objects.all()
+    template_name = "account/worker_detail.html"
 
 
 class LoginUser(LoginView):

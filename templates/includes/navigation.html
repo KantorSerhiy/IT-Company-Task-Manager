@@ -18,24 +18,19 @@
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Dropdown link
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
-          </ul>
-          <li class="nav-item last-related">
             {% if user.is_authenticated %}
-              <li class="nav-item"><a class="nav-link"  href="{{ user.get_absolute_url }}">{{ user.get_username }}</a></li>
-              <li class="nav-item"><a class="nav-link"  href="{% url 'TaskManager:logout' %}">  Logout</a></li>
+              {{ user.get_username }}
+          </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Settings</a></li>
+                <li><a class="dropdown-item" href="{% url 'TaskManager:logout' %}">Logout</a></li>
+              </ul>
             {% else %}
               <li class="nav-item"><a class="nav-link" href="{% url 'TaskManager:login' %}">Login</a></li>
               <li class="nav-item"><a class="nav-link" href="{% url 'TaskManager:register' %}">Registration</a></li>
             {% endif %}
-          </li>
-        </li>
       </ul>
+
     </div>
   </div>
 
