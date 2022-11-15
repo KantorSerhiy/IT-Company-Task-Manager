@@ -17,7 +17,7 @@ def index(request):
 
     context = {
         "num_workers": num_workers,
-        "num_task": num_task
+        "num_task": num_task,
     }
     return render(request, "TaskManager/index.html", context=context)
 
@@ -34,7 +34,6 @@ class RegisterUser(generic.CreateView):
 
 class UserDetailView(generic.DetailView):
     model = Worker
-    queryset = Worker.objects.all()
     template_name = "account/worker_detail.html"
 
 

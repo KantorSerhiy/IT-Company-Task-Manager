@@ -8,7 +8,7 @@
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
+          <a class="nav-link active" aria-current="page" href="{% url 'TaskManager:index' %}">Home</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Task</a>
@@ -22,7 +22,7 @@
               {{ user.get_username }}
           </a>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Settings</a></li>
+                <li><a class="dropdown-item" href="{% url 'TaskManager:worker_detail' worker.slug %}">Details</a></li>
                 <li><a class="dropdown-item" href="{% url 'TaskManager:logout' %}">Logout</a></li>
               </ul>
             {% else %}

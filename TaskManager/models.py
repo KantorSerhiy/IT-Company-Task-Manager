@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.urls import reverse
 from django.utils.text import slugify
 
 
@@ -26,6 +27,12 @@ class Worker(AbstractUser):
             self.slug = slugify(self.username)
 
         return super(Worker, self).save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        kwargs = {
+            "slug": self.slug
+        }
+        return reverse('TaskManager:worker_detail', kwargs=kwargs)
 
     class Meta:
         verbose_name = "worker"
