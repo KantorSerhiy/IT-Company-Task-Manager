@@ -32,9 +32,15 @@ class RegisterUser(generic.CreateView):
         return reverse_lazy("TaskManager:done", kwargs={"name": self.object.username})
 
 
-class UserDetailView(generic.DetailView):
+class WorkerDetailView(generic.DetailView):
     model = Worker
     template_name = "account/worker_detail.html"
+
+
+class WorkerDeleteView(generic.DeleteView):
+    model = Worker
+    success_url = reverse_lazy("TaskManager:index")
+    template_name = "account/worker_delete.html"
 
 
 class LoginUser(LoginView):

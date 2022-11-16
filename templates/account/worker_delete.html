@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="delete-page">
+    <h1>{{ worker.username }},do you really want to delete u account??</h1>
+    <p>Are you really want to delete? </p>
+    <form action="" method="post">
+      {% csrf_token %}
+
+      <input type="submit" value="Yes" class="btn btn-danger">
+      <a class="btn btn-secondary" href="{{ user.get_absolute_url}}">No, thanks</a>
+    </form>
+  </div>
+{% endblock %}
