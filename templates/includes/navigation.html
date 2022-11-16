@@ -22,7 +22,7 @@
               {{ user.get_username }}
           </a>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{% url 'TaskManager:worker_detail' worker.slug %}">Details</a></li>
+                <li><a class="dropdown-item" href="{{ user.get_absolute_url}}">Details</a></li>
                 <li><a class="dropdown-item" href="{% url 'TaskManager:logout' %}">Logout</a></li>
               </ul>
             {% else %}
