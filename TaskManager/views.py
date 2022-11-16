@@ -1,11 +1,11 @@
+from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.views import LoginView, LogoutView
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic
-from django.views.generic import DetailView
 
-from TaskManager.forms import UsersCreationForm
+from TaskManager.forms import WorkerCreationForm, WorkerUpdateForm
 
 from TaskManager.models import Worker, Task
 
@@ -24,7 +24,7 @@ def index(request):
 
 class RegisterUser(generic.CreateView):
     model = Worker
-    form_class = UsersCreationForm
+    form_class = WorkerCreationForm
     template_name = "account/register.html"
     success_url = reverse_lazy('TaskManager:done')
 
@@ -37,10 +37,20 @@ class WorkerDetailView(generic.DetailView):
     template_name = "account/worker_detail.html"
 
 
+class WorkerUpdateView(generic.UpdateView):
+    model = Worker
+    form_class = WorkerUpdateForm
+    success_url = reverse_lazy('TaskManager:worker_detail')
+    template_name = "account/worker_update.html"
+    def get_success_url(self):
+        return reverse_lazy("TaskManager:worker_detail", kwargs={"slug": self.object.slug})
+
+
 class WorkerDeleteView(generic.DeleteView):
     model = Worker
     success_url = reverse_lazy("TaskManager:index")
     template_name = "account/worker_delete.html"
+    success_message = "DELETE SUCSSRCSCS"
 
 
 class LoginUser(LoginView):
