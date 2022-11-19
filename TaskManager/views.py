@@ -32,6 +32,12 @@ class RegisterUser(generic.CreateView):
         return reverse_lazy("TaskManager:done", kwargs={"name": self.object.username})
 
 
+class WorkerListView(generic.ListView):
+    model = Worker
+    template_name = "TaskManager/worker_list.html"
+
+
+
 class WorkerDetailView(generic.DetailView):
     model = Worker
     template_name = "account/worker_detail.html"
@@ -42,6 +48,7 @@ class WorkerUpdateView(generic.UpdateView):
     form_class = WorkerUpdateForm
     success_url = reverse_lazy('TaskManager:worker_detail')
     template_name = "account/worker_update.html"
+
     def get_success_url(self):
         return reverse_lazy("TaskManager:worker_detail", kwargs={"slug": self.object.slug})
 
