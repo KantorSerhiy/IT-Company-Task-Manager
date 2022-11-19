@@ -28,15 +28,9 @@
       {% if task.deadline %}
         Deadline: {{ task.deadline }}
       {% endif %}
+       <a href="{% url 'TaskManager:tasks-detail' pk=task.id %}" class="btn btn-secondary link-to-page">
+      View details
+    </a>
     </p>
-{#    <p>#}
-{#      Tags:#}
-{#      {% for tag in task.tags.all %}#}
-{#        {{ tag.name }}#}
-{#      {% endfor %}#}
-{#      <a href="{% url 'todo:task-update' pk=task.id %}" class="btn btn-link">Update</a>#}
-{#      <a href="{% url 'todo:task-delete' pk=task.id %}" class="btn btn-link">Delete</a>#}
-{#    </p>#}
-    <hr>
   {% endfor %}
 {% endblock %}

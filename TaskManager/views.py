@@ -91,8 +91,6 @@ class TaskDetailView(generic.DetailView):
     template_name = "TaskManager/task_detail.html"
 
 
-
-
 class TaskUpdateView(generic.UpdateView):
     pass
 
