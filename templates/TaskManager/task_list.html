@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>
+    Task list
+    <a href="#" class="btn btn-primary link-to-page">
+      Create
+    </a>
+  </h1>
+  {% for task in task_list %}
+    <p>
+      <strong>
+        {{ task.name }}
+        {% if task.is_completed %}
+          <span class="text-success">Done</span>
+        {% else %}
+          <span class="text-danger">Not done</span>
+        {% endif %}
+      </strong>
+    </p>
+    {%  if task.is_completed %}
+      <a href="{% url 'TaskManager:task-complete' pk=task.id %}" class="btn btn-dark link-to-page">Undo</a>
+    {% else %}
+      <a href="{% url 'TaskManager:task-complete' pk=task.id %}" class="btn btn-success link-to-page">Compete</a>
+    {% endif %}
+    <p>
+      Created: {{ task.created_ad }}
+      {% if task.deadline %}
+        Deadline: {{ task.deadline }}
+      {% endif %}
+    </p>
+{#    <p>#}
+{#      Tags:#}
+{#      {% for tag in task.tags.all %}#}
+{#        {{ tag.name }}#}
+{#      {% endfor %}#}
+{#      <a href="{% url 'todo:task-update' pk=task.id %}" class="btn btn-link">Update</a>#}
+{#      <a href="{% url 'todo:task-delete' pk=task.id %}" class="btn btn-link">Delete</a>#}
+{#    </p>#}
+    <hr>
+  {% endfor %}
+{% endblock %}

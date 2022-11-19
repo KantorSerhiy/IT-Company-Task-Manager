@@ -1,6 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.views import LoginView, LogoutView
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic
@@ -35,7 +36,6 @@ class RegisterUser(generic.CreateView):
 class WorkerListView(generic.ListView):
     model = Worker
     template_name = "TaskManager/worker_list.html"
-
 
 
 class WorkerDetailView(generic.DetailView):
@@ -79,3 +79,33 @@ class RegisterDone(LoginView):
         context = super().get_context_data(**kwargs)
         context["username"] = self.kwargs["name"]
         return context
+
+
+class TaskListView(generic.ListView):
+    model = Task
+    template_name = "TaskManager/task_list.html"
+
+
+class TaskDetailView(generic.DetailView):
+    model = Task
+    template_name = "TaskManager/task_detail.html"
+
+
+
+
+class TaskUpdateView(generic.UpdateView):
+    pass
+
+
+class TaskDeleteView(generic.DeleteView):
+    pass
+
+
+def task_complete_view(request, pk):
+    task = Task.objects.get(id=pk)
+    if task.is_completed:
+        task.is_completed = False
+    else:
+        task.is_completed = True
+    task.save()
+    return HttpResponseRedirect(reverse_lazy("TaskManager:tasks-list"))

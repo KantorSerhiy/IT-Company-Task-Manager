@@ -10,10 +10,11 @@ class WorkerCreationForm(UserCreationForm):
         fields = UserCreationForm.Meta.fields + (
             "first_name",
             "last_name",
+            "position"
         )
 
 
 class WorkerUpdateForm(forms.ModelForm):
     class Meta:
         model = Worker
-        fields = ["first_name", "last_name"]
+        fields = ["first_name", "last_name", "position"]

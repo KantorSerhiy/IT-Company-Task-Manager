@@ -10,6 +10,11 @@ from TaskManager.views import (
     WorkerDeleteView,
     WorkerUpdateView,
     WorkerListView,
+    TaskListView,
+    TaskDetailView,
+    TaskUpdateView,
+    TaskDeleteView,
+    task_complete_view,
 )
 
 urlpatterns = [
@@ -22,6 +27,11 @@ urlpatterns = [
     path("workers/", WorkerListView.as_view(), name="worker_list"),
     path("worker/<slug:slug>/delete/", WorkerDeleteView.as_view(), name="worker-delete"),
     path("worker/<slug:slug>/update/", WorkerUpdateView.as_view(), name="worker-update"),
+    path("tasks/", TaskListView.as_view(), name="tasks-list"),
+    path("tasks/<int:pk>", TaskDetailView.as_view(), name="tasks-detail"),
+    path("tasks/", TaskUpdateView.as_view(), name="tasks-update"),
+    path("tasks/", TaskDeleteView.as_view(), name="tasks-delete"),
+    path("tasks/complate/<int:pk>", task_complete_view, name="task-complete")
 ]
 
 app_name = "TaskManager"

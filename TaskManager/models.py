@@ -19,7 +19,7 @@ class Position(models.Model):
 
 
 class Worker(AbstractUser):
-    position = models.ForeignKey(to=Position, on_delete=models.CASCADE, null=True)
+    position = models.ForeignKey(to=Position, on_delete=models.CASCADE)
     slug = models.SlugField(max_length=63, unique=True)
 
     def save(self, *args, **kwargs):
@@ -58,6 +58,9 @@ class Task(models.Model):
     task_type = models.ForeignKey(to=TaskType, on_delete=models.CASCADE)
     assignees = models.ManyToManyField(to=Worker, related_name="tasks")
     created_ad = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["is_completed", "created_ad"]
 
     def __str__(self):
         return f"{self.name}( type:{self.task_type},priority {self.priority})"
