@@ -19,7 +19,7 @@
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             {% if user.is_authenticated %}
-              {{ user.get_username }}
+              {{ user.username }}
           </a>
               <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="{{ user.get_absolute_url}}">Details</a></li>
