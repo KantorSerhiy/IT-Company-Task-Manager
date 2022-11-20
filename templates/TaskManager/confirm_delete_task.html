@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Delete Task?</h1>
+    <p>Are you really want to delete <strong>{{ task.name }}</strong>?</p>
+    <form action="" method="post">
+      {% csrf_token %}
+
+      <input type="submit" value="Yes" class="btn btn-danger">
+      <a class="btn btn-secondary" href="{% url 'TaskManager:tasks-detail' pk=task.id %}">No, thanks</a>
+    </form>
+{% endblock %}

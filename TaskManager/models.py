@@ -73,7 +73,7 @@ class Worker(AbstractUser):
         kwargs = {
             "slug": self.slug
         }
-        return reverse('TaskManager:worker_detail', kwargs=kwargs)
+        return reverse('TaskManager:worker-detail', kwargs=kwargs)
 
     class Meta:
         verbose_name = "worker"

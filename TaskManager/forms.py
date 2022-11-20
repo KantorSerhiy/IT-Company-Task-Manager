@@ -21,6 +21,12 @@ class TaskCreateForm(forms.ModelForm):
         fields = "__all__"
 
 
+class TaskUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Task
+        fields = "__all__"
+
+
 class WorkerUpdateForm(forms.ModelForm):
     class Meta:
         model = Worker

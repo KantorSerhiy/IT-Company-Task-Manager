@@ -6,7 +6,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic
 
-from TaskManager.forms import WorkerCreationForm, WorkerUpdateForm, TaskCreateForm
+from TaskManager.forms import WorkerCreationForm, WorkerUpdateForm, TaskCreateForm, TaskUpdateForm
 
 from TaskManager.models import Worker, Task
 
@@ -91,7 +91,13 @@ class TaskDetailView(generic.DetailView):
 
 
 class TaskUpdateView(generic.UpdateView):
-    pass
+    model = Task
+    form_class = TaskUpdateForm
+    success_url = reverse_lazy("TaskManager:tasks-detail")
+    template_name = "TaskManager/task_update.html"
+
+    def get_success_url(self):
+        return reverse_lazy("TaskManager:tasks-detail", kwargs={"pk": self.object.id})
 
 
 class TaskCreateView(generic.CreateView):
@@ -102,7 +108,9 @@ class TaskCreateView(generic.CreateView):
 
 
 class TaskDeleteView(generic.DeleteView):
-    pass
+    model = Task
+    template_name = "TaskManager/confirm_delete_task.html"
+    success_url = reverse_lazy("TaskManager:tasks-list")
 
 
 def task_complete_view(request, pk):
