@@ -6,7 +6,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic
 
-from TaskManager.forms import WorkerCreationForm, WorkerUpdateForm
+from TaskManager.forms import WorkerCreationForm, WorkerUpdateForm, TaskCreateForm
 
 from TaskManager.models import Worker, Task
 
@@ -57,7 +57,6 @@ class WorkerDeleteView(generic.DeleteView):
     model = Worker
     success_url = reverse_lazy("TaskManager:index")
     template_name = "account/worker_delete.html"
-    success_message = "DELETE SUCSSRCSCS"
 
 
 class LoginUser(LoginView):
@@ -93,6 +92,13 @@ class TaskDetailView(generic.DetailView):
 
 class TaskUpdateView(generic.UpdateView):
     pass
+
+
+class TaskCreateView(generic.CreateView):
+    model = Task
+    form_class = TaskCreateForm
+    template_name = "TaskManager/task_create.html"
+    success_url = reverse_lazy("TaskManager:tasks-list")
 
 
 class TaskDeleteView(generic.DeleteView):
