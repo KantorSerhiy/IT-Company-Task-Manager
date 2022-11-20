@@ -1,5 +1,7 @@
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
@@ -11,6 +13,7 @@ from TaskManager.forms import WorkerCreationForm, WorkerUpdateForm, TaskCreateFo
 from TaskManager.models import Worker, Task
 
 
+@login_required
 def index(request):
     """View function for the home page of the site."""
     num_workers = Worker.objects.count()
@@ -33,17 +36,17 @@ class RegisterUser(generic.CreateView):
         return reverse_lazy("TaskManager:done", kwargs={"name": self.object.username})
 
 
-class WorkerListView(generic.ListView):
+class WorkerListView(LoginRequiredMixin, generic.ListView):
     model = Worker
     template_name = "TaskManager/worker_list.html"
 
 
-class WorkerDetailView(generic.DetailView):
+class WorkerDetailView(LoginRequiredMixin, generic.DetailView):
     model = Worker
     template_name = "account/worker_detail.html"
 
 
-class WorkerUpdateView(generic.UpdateView):
+class WorkerUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Worker
     form_class = WorkerUpdateForm
     success_url = reverse_lazy('TaskManager:worker_detail')
@@ -53,7 +56,7 @@ class WorkerUpdateView(generic.UpdateView):
         return reverse_lazy("TaskManager:worker_detail", kwargs={"slug": self.object.slug})
 
 
-class WorkerDeleteView(generic.DeleteView):
+class WorkerDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Worker
     success_url = reverse_lazy("TaskManager:index")
     template_name = "account/worker_delete.html"
@@ -61,7 +64,7 @@ class WorkerDeleteView(generic.DeleteView):
 
 class LoginUser(LoginView):
     form_class = AuthenticationForm
-    template_name = "account/login.html"
+    template_name = "registration/login.html"
 
     def get_success_url(self):
         return reverse_lazy('TaskManager:index')
@@ -80,17 +83,17 @@ class RegisterDone(LoginView):
         return context
 
 
-class TaskListView(generic.ListView):
+class TaskListView(LoginRequiredMixin, generic.ListView):
     model = Task
     template_name = "TaskManager/task_list.html"
 
 
-class TaskDetailView(generic.DetailView):
+class TaskDetailView(LoginRequiredMixin, generic.DetailView):
     model = Task
     template_name = "TaskManager/task_detail.html"
 
 
-class TaskUpdateView(generic.UpdateView):
+class TaskUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Task
     form_class = TaskUpdateForm
     success_url = reverse_lazy("TaskManager:tasks-detail")
@@ -100,19 +103,20 @@ class TaskUpdateView(generic.UpdateView):
         return reverse_lazy("TaskManager:tasks-detail", kwargs={"pk": self.object.id})
 
 
-class TaskCreateView(generic.CreateView):
+class TaskCreateView(LoginRequiredMixin, generic.CreateView):
     model = Task
     form_class = TaskCreateForm
     template_name = "TaskManager/task_create.html"
     success_url = reverse_lazy("TaskManager:tasks-list")
 
 
-class TaskDeleteView(generic.DeleteView):
+class TaskDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Task
     template_name = "TaskManager/confirm_delete_task.html"
     success_url = reverse_lazy("TaskManager:tasks-list")
 
 
+@login_required
 def task_complete_view(request, pk):
     task = Task.objects.get(id=pk)
     if task.is_completed:
