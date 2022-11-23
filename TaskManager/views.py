@@ -1,4 +1,3 @@
-from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -39,6 +38,7 @@ class RegisterUser(generic.CreateView):
 class WorkerListView(LoginRequiredMixin, generic.ListView):
     model = Worker
     template_name = "TaskManager/worker_list.html"
+    paginate_by = 2
 
 
 class WorkerDetailView(LoginRequiredMixin, generic.DetailView):
@@ -86,6 +86,7 @@ class RegisterDone(LoginView):
 class TaskListView(LoginRequiredMixin, generic.ListView):
     model = Task
     template_name = "TaskManager/task_list.html"
+    paginate_by = 5
 
 
 class TaskDetailView(LoginRequiredMixin, generic.DetailView):
@@ -108,6 +109,10 @@ class TaskCreateView(LoginRequiredMixin, generic.CreateView):
     form_class = TaskCreateForm
     template_name = "TaskManager/task_create.html"
     success_url = reverse_lazy("TaskManager:tasks-list")
+
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        return super().form_valid(form)
 
 
 class TaskDeleteView(LoginRequiredMixin, generic.DeleteView):

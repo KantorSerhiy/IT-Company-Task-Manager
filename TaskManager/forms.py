@@ -18,13 +18,13 @@ class WorkerCreationForm(UserCreationForm):
 class TaskCreateForm(forms.ModelForm):
     class Meta:
         model = Task
-        fields = "__all__"
+        fields = ["name", "description", "task_type", "is_completed", "assignees", "deadline", "priority"]
 
 
 class TaskUpdateForm(forms.ModelForm):
     class Meta:
         model = Task
-        fields = "__all__"
+        fields = ["name", "description", "task_type", "is_completed", "assignees", "deadline", "priority"]
 
 
 class WorkerUpdateForm(forms.ModelForm):

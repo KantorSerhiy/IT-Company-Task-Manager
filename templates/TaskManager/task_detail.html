@@ -20,6 +20,7 @@
   {% for worker in task.assignees.all %}
      <p><strong>Assignees:</strong> {{ worker.username }}</p>
   {% endfor %}
+  <p><strong>Created_by:</strong> {{ task.created_by }}</p>
 
 
   <p><strong>Created_ad:</strong> {{ task.created_ad }}</p>

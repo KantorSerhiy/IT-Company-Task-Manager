@@ -5,6 +5,8 @@ from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
 
+from ItCompanyTaskManager import settings
+
 
 class TaskType(models.Model):
     name = models.CharField(max_length=63)
@@ -101,9 +103,11 @@ class Task(models.Model):
     task_type = models.ForeignKey(to=TaskType, on_delete=models.CASCADE)
     assignees = models.ManyToManyField(to=Worker, related_name="tasks")
     created_ad = models.DateTimeField(auto_now_add=True)
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
 
     class Meta:
         ordering = ["is_completed", "created_ad"]
 
     def __str__(self):
         return f"{self.name}( type:{self.task_type},priority {self.priority})"
+
